@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <text x="10" y="40" font-family="Arial" font-size="32" font-weight="bold" fill="#FFE4C4">
+    Avaan
+  </text>
+  <text x="100" y="40" font-family="Arial" font-size="32" font-weight="bold" fill="#FFE4C4">
+    Delivery
+  </text>
+  <path d="M160 25 h20 v10 h-20 z" fill="#FFE4C4"/>
+  <path d="M155 30 l15 -5 v10 z" fill="#FFE4C4"/>
+</svg> 

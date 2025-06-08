@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-blue: #00C2E8;
+  --secondary-blue: #009DE0;
+  --background: #000000;
+  --text: #FFFFFF;
+  --accent: #FF0066;
+  --card-background: #1A1A1A;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-text;
+  }
+}
+
+@layer utilities {
+  .bg-primary-blue {
+    background-color: var(--primary-blue);
+  }
+  .bg-secondary-blue {
+    background-color: var(--secondary-blue);
+  }
+  .bg-background {
+    background-color: var(--background);
+  }
+  .text-primary-blue {
+    color: var(--primary-blue);
+  }
+} 
