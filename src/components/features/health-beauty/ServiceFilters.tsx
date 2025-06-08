@@ -31,20 +31,26 @@ const genderOptions = [
 ]
 
 interface ServiceFiltersProps {
-  selectedCategory: string;
-  selectedTreatment: string;
-  selectedGender: string;
-  onCategoryChange: (category: string) => void;
-  onTreatmentChange: (treatment: string) => void;
-  onGenderChange: (gender: string) => void;
+  categories: string[]
+  services: string[]
+  genderOptions: string[]
+  selectedCategory: string
+  selectedServices: string[]
+  selectedGender: string
+  onCategoryChange: (category: string) => void
+  onServiceToggle: (service: string) => void
+  onGenderChange: (gender: string) => void
 }
 
-export default function ServiceFilters({ 
-  selectedCategory, 
-  selectedTreatment, 
+export default function ServiceFilters({
+  categories,
+  services,
+  genderOptions,
+  selectedCategory,
+  selectedServices,
   selectedGender,
   onCategoryChange,
-  onTreatmentChange,
+  onServiceToggle,
   onGenderChange
 }: ServiceFiltersProps) {
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false)
@@ -52,106 +58,69 @@ export default function ServiceFilters({
   const [isGenderDropdownOpen, setIsGenderDropdownOpen] = useState(false)
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-6">
-      {/* Category Filter */}
-      <div className="relative">
-        <button
-          onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
-          className="w-full md:w-[200px] flex items-center justify-between gap-2 px-4 py-2 bg-gray-900 rounded-lg text-white hover:bg-gray-800 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <Filter size={18} />
-            <span className="truncate">{selectedCategory}</span>
+    <div className="bg-card-background border-y border-gray-800">
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="space-y-6">
+          {/* Categories */}
+          <div>
+            <h3 className="text-white font-medium mb-3">Categories</h3>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => onCategoryChange(category)}
+                  className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                    selectedCategory === category
+                      ? 'bg-primary-blue text-white'
+                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
-          <ChevronDown size={18} className={`transition-transform ${isCategoryDropdownOpen ? 'rotate-180' : ''}`} />
-        </button>
-        
-        {isCategoryDropdownOpen && (
-          <div className="absolute z-10 mt-2 w-full bg-gray-900 rounded-lg shadow-lg py-2">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => {
-                  onCategoryChange(category)
-                  setIsCategoryDropdownOpen(false)
-                }}
-                className={`w-full px-4 py-2 text-left hover:bg-gray-800 transition-colors ${
-                  selectedCategory === category ? 'text-primary-blue' : 'text-white'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
 
-      {/* Treatment Filter */}
-      <div className="relative">
-        <button
-          onClick={() => setIsTreatmentDropdownOpen(!isTreatmentDropdownOpen)}
-          className="w-full md:w-[200px] flex items-center justify-between gap-2 px-4 py-2 bg-gray-900 rounded-lg text-white hover:bg-gray-800 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <span className="truncate">
-              {treatments.find(t => t.value === selectedTreatment)?.label}
-            </span>
+          {/* Service Types */}
+          <div>
+            <h3 className="text-white font-medium mb-3">Service Types</h3>
+            <div className="flex flex-wrap gap-2">
+              {services.map((service) => (
+                <button
+                  key={service}
+                  onClick={() => onServiceToggle(service)}
+                  className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                    selectedServices.includes(service)
+                      ? 'bg-primary-blue text-white'
+                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  }`}
+                >
+                  {service}
+                </button>
+              ))}
+            </div>
           </div>
-          <ChevronDown size={18} className={`transition-transform ${isTreatmentDropdownOpen ? 'rotate-180' : ''}`} />
-        </button>
-        
-        {isTreatmentDropdownOpen && (
-          <div className="absolute z-10 mt-2 w-full bg-gray-900 rounded-lg shadow-lg py-2">
-            {treatments.map((treatment) => (
-              <button
-                key={treatment.value}
-                onClick={() => {
-                  onTreatmentChange(treatment.value)
-                  setIsTreatmentDropdownOpen(false)
-                }}
-                className={`w-full px-4 py-2 text-left hover:bg-gray-800 transition-colors ${
-                  selectedTreatment === treatment.value ? 'text-primary-blue' : 'text-white'
-                }`}
-              >
-                {treatment.label}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
 
-      {/* Gender Filter */}
-      <div className="relative">
-        <button
-          onClick={() => setIsGenderDropdownOpen(!isGenderDropdownOpen)}
-          className="w-full md:w-[200px] flex items-center justify-between gap-2 px-4 py-2 bg-gray-900 rounded-lg text-white hover:bg-gray-800 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <span className="truncate">
-              {genderOptions.find(g => g.value === selectedGender)?.label}
-            </span>
+          {/* Gender */}
+          <div>
+            <h3 className="text-white font-medium mb-3">Gender</h3>
+            <div className="flex flex-wrap gap-2">
+              {genderOptions.map((gender) => (
+                <button
+                  key={gender}
+                  onClick={() => onGenderChange(gender)}
+                  className={`px-4 py-2 rounded-full text-sm transition-colors ${
+                    selectedGender === gender
+                      ? 'bg-primary-blue text-white'
+                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  }`}
+                >
+                  {gender}
+                </button>
+              ))}
+            </div>
           </div>
-          <ChevronDown size={18} className={`transition-transform ${isGenderDropdownOpen ? 'rotate-180' : ''}`} />
-        </button>
-        
-        {isGenderDropdownOpen && (
-          <div className="absolute z-10 mt-2 w-full bg-gray-900 rounded-lg shadow-lg py-2">
-            {genderOptions.map((gender) => (
-              <button
-                key={gender.value}
-                onClick={() => {
-                  onGenderChange(gender.value)
-                  setIsGenderDropdownOpen(false)
-                }}
-                className={`w-full px-4 py-2 text-left hover:bg-gray-800 transition-colors ${
-                  selectedGender === gender.value ? 'text-primary-blue' : 'text-white'
-                }`}
-              >
-                {gender.label}
-              </button>
-            ))}
-          </div>
-        )}
+        </div>
       </div>
     </div>
   )

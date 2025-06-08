@@ -1,115 +1,169 @@
 'use client'
 
-import Header from '@/components/layout/Header'
-import Navigation from '@/components/layout/Navigation'
-import StoreFilters from '@/components/features/groceries/StoreFilters'
-import StoreGrid from '@/components/features/groceries/StoreGrid'
-import { Search } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import { Star, Clock, ShoppingBag } from 'lucide-react'
+import Header from '@/components/layout/Header'
+import StoreFilters from '@/components/features/groceries/StoreFilters'
+
+// Mock data - In a real app, this would come from an API
+const stores = [
+  {
+    id: 1,
+    name: 'Fresh Market',
+    image: 'https://picsum.photos/800/400?random=1',
+    type: 'Supermarket',
+    rating: 4.8,
+    deliveryTime: '20-30 min',
+    minOrder: 20,
+    priceRange: '$$',
+    description: 'Fresh produce, groceries, and household essentials',
+    tags: ['organic', 'fresh', 'local']
+  },
+  {
+    id: 2,
+    name: 'Green Grocer',
+    image: 'https://picsum.photos/800/400?random=2',
+    type: 'Organic Store',
+    rating: 4.6,
+    deliveryTime: '25-35 min',
+    minOrder: 25,
+    priceRange: '$$$',
+    description: 'Organic and locally sourced produce',
+    tags: ['organic', 'local', 'sustainable']
+  },
+  {
+    id: 3,
+    name: 'Value Mart',
+    image: 'https://picsum.photos/800/400?random=3',
+    type: 'Supermarket',
+    rating: 4.3,
+    deliveryTime: '30-45 min',
+    minOrder: 15,
+    priceRange: '$',
+    description: 'Everyday groceries at great prices',
+    tags: ['value', 'groceries']
+  }
+]
+
+const storeTypes = [
+  'All',
+  'Supermarket',
+  'Local Market',
+  'Organic Store',
+  'International',
+  'Specialty'
+]
 
 export default function GroceriesPage() {
   const router = useRouter()
-  const [isNavCollapsed, setIsNavCollapsed] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [selectedType, setSelectedType] = useState('All Stores')
-  const [selectedPrice, setSelectedPrice] = useState('any')
+  const [selectedType, setSelectedType] = useState('All')
+  const [selectedPriceRange, setSelectedPriceRange] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [isSearching, setIsSearching] = useState(false)
 
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+  const filteredStores = stores.filter(store => {
+    if (selectedType !== 'All' && store.type !== selectedType) return false
+    if (selectedPriceRange && store.priceRange !== selectedPriceRange) return false
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase()
+      return (
+        store.name.toLowerCase().includes(query) ||
+        store.description.toLowerCase().includes(query) ||
+        store.tags.some(tag => tag.toLowerCase().includes(query))
+      )
     }
-
-    checkIsMobile()
-    window.addEventListener('resize', checkIsMobile)
-    return () => window.removeEventListener('resize', checkIsMobile)
-  }, [])
-
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!searchQuery.trim()) return
-
-    setIsSearching(true)
-    try {
-      // If it's a complex search, redirect to the search page
-      if (searchQuery.length > 2) {
-        await router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}&type=grocery`)
-      }
-    } catch (err) {
-      console.error('Search failed:', err)
-    } finally {
-      setIsSearching(false)
-    }
-  }
+    return true
+  })
 
   return (
-    <main className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background">
       <Header 
         isMobileMenuOpen={isMobileMenuOpen}
         onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       />
-      <Navigation 
-        onCollapse={(collapsed) => setIsNavCollapsed(collapsed)}
-        isMobileMenuOpen={isMobileMenuOpen}
-        onMobileMenuClose={() => setIsMobileMenuOpen(false)}
-      />
-      <div 
-        className={`transition-all duration-300 ${
-          isMobile 
-            ? 'ml-0' 
-            : isNavCollapsed ? 'ml-20' : 'ml-64'
-        } pt-[60px]`}
-      >
-        {/* Hero Section */}
-        <div className="relative h-[200px] md:h-[300px] w-full overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-900" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white text-center mb-4 md:mb-6">
-              Online Grocery Shopping
-            </h1>
-            <p className="text-base md:text-xl text-white/90 text-center mb-6 md:mb-8 max-w-2xl">
-              Shop from your favorite local stores with same-day delivery
-            </p>
 
-            {/* Search Bar */}
-            <form onSubmit={handleSearch} className="w-full max-w-2xl relative">
+      {/* Hero Section */}
+      <div className="relative h-[300px] md:h-[400px]">
+        <Image
+          src="https://picsum.photos/1920/1080?random=0"
+          alt="Groceries"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/80" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="max-w-4xl w-full mx-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-white text-center mb-6">
+              Order Groceries Online
+            </h1>
+            <div className="relative">
               <input
                 type="text"
+                placeholder="Search for stores or products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search for stores or products..."
-                className="w-full pl-12 pr-4 py-3 md:py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-primary-blue"
+                className="w-full px-6 py-4 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-blue"
               />
-              <button
-                type="submit"
-                disabled={!searchQuery.trim() || isSearching}
-                className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-primary-blue hover:bg-secondary-blue disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg transition-all"
-              >
-                <Search size={20} className={isSearching ? 'animate-pulse' : ''} />
-              </button>
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60" size={20} />
-            </form>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Main Content */}
-        <div className="p-4 md:p-6">
-          <StoreFilters 
-            selectedType={selectedType}
-            selectedPrice={selectedPrice}
-            onTypeChange={setSelectedType}
-            onPriceChange={setSelectedPrice}
-          />
-          <StoreGrid 
-            selectedType={selectedType}
-            selectedPrice={selectedPrice}
-            searchQuery={searchQuery}
-          />
+      {/* Filters */}
+      <StoreFilters
+        types={storeTypes}
+        selectedType={selectedType}
+        onTypeChange={setSelectedType}
+        selectedPriceRange={selectedPriceRange}
+        onPriceRangeChange={setSelectedPriceRange}
+      />
+
+      {/* Store Grid */}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredStores.map((store) => (
+            <button
+              key={store.id}
+              onClick={() => router.push(`/groceries/${store.id}`)}
+              className="group bg-card-background rounded-lg overflow-hidden border border-gray-800 hover:border-gray-700 transition-colors"
+            >
+              <div className="relative h-48">
+                <Image
+                  src={store.image}
+                  alt={store.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-xl font-medium text-white mb-2">{store.name}</h3>
+                <p className="text-gray-400 text-sm mb-4">{store.description}</p>
+                <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-4">
+                    <span className="text-gray-400">{store.type}</span>
+                    <div className="flex items-center gap-1">
+                      <Star className="w-4 h-4 text-yellow-500" />
+                      <span className="text-white">{store.rating}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-1">
+                      <Clock className="w-4 h-4 text-gray-400" />
+                      <span className="text-gray-400">{store.deliveryTime}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <ShoppingBag className="w-4 h-4 text-gray-400" />
+                      <span className="text-gray-400">Min ${store.minOrder}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </button>
+          ))}
         </div>
       </div>
-    </main>
+    </div>
   )
 } 

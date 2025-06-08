@@ -15,8 +15,10 @@ export default function RestaurantsPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [selectedCuisine, setSelectedCuisine] = useState('All')
   const [selectedPrice, setSelectedPrice] = useState('all')
+  const [selectedSort, setSelectedSort] = useState('recommended')
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearching, setIsSearching] = useState(false)
+  const [debouncedSearch, setDebouncedSearch] = useState('')
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -27,6 +29,15 @@ export default function RestaurantsPage() {
     window.addEventListener('resize', checkIsMobile)
     return () => window.removeEventListener('resize', checkIsMobile)
   }, [])
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery)
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [searchQuery])
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -100,11 +111,13 @@ export default function RestaurantsPage() {
           <RestaurantFilters 
             onCuisineChange={setSelectedCuisine}
             onPriceChange={setSelectedPrice}
+            onSortChange={setSelectedSort}
           />
           <RestaurantGrid 
             selectedCuisine={selectedCuisine}
             selectedPrice={selectedPrice}
-            searchQuery={searchQuery}
+            searchQuery={debouncedSearch}
+            sortBy={selectedSort}
           />
         </div>
       </div>

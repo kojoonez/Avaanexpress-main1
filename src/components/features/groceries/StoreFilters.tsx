@@ -1,107 +1,79 @@
 'use client'
 
-import { useState } from 'react'
-import { Filter, ChevronDown } from 'lucide-react'
-
-const storeTypes = [
-  'All Stores',
-  'Supermarket',
-  'Local Market',
-  'Organic',
-  'International',
-  'Specialty'
-]
-
-const priceRanges = [
-  { label: 'Any Price', value: 'any' },
-  { label: 'Budget $', value: 'low' },
-  { label: 'Mid Range $$', value: 'medium' },
-  { label: 'Premium $$$', value: 'high' }
-]
+import { Dispatch, SetStateAction } from 'react'
 
 interface StoreFiltersProps {
+  types: string[];
   selectedType: string;
-  selectedPrice: string;
-  onTypeChange: (type: string) => void;
-  onPriceChange: (price: string) => void;
+  onTypeChange: Dispatch<SetStateAction<string>>;
+  selectedPriceRange: string | null;
+  onPriceRangeChange: Dispatch<SetStateAction<string | null>>;
 }
 
-export default function StoreFilters({ 
-  selectedType, 
-  selectedPrice, 
-  onTypeChange, 
-  onPriceChange 
+const priceRanges = [
+  { label: '$', description: 'Budget-friendly' },
+  { label: '$$', description: 'Mid-range' },
+  { label: '$$$', description: 'Premium' }
+]
+
+export default function StoreFilters({
+  types,
+  selectedType,
+  onTypeChange,
+  selectedPriceRange,
+  onPriceRangeChange
 }: StoreFiltersProps) {
-  const [isTypeDropdownOpen, setIsTypeDropdownOpen] = useState(false)
-  const [isPriceDropdownOpen, setIsPriceDropdownOpen] = useState(false)
-
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-6">
-      {/* Store Type Filter */}
-      <div className="relative">
-        <button
-          onClick={() => setIsTypeDropdownOpen(!isTypeDropdownOpen)}
-          className="w-full md:w-[200px] flex items-center justify-between gap-2 px-4 py-2 bg-gray-900 rounded-lg text-white hover:bg-gray-800 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <Filter size={18} />
-            <span className="truncate">{selectedType}</span>
+    <div className="bg-card-background border-b border-gray-800">
+      <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="flex flex-col md:flex-row gap-4">
+          {/* Store Types */}
+          <div className="flex-1">
+            <label className="block text-sm font-medium text-gray-400 mb-2">
+              Store Type
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {types.map((type) => (
+                <button
+                  key={type}
+                  onClick={() => onTypeChange(type)}
+                  className={`px-4 py-2 rounded-lg text-sm transition-colors ${
+                    selectedType === type
+                      ? 'bg-primary-blue text-white'
+                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  }`}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
           </div>
-          <ChevronDown size={18} className={`transition-transform ${isTypeDropdownOpen ? 'rotate-180' : ''}`} />
-        </button>
-        
-        {isTypeDropdownOpen && (
-          <div className="absolute z-10 mt-2 w-full bg-gray-900 rounded-lg shadow-lg py-2">
-            {storeTypes.map((type) => (
-              <button
-                key={type}
-                onClick={() => {
-                  onTypeChange(type)
-                  setIsTypeDropdownOpen(false)
-                }}
-                className={`w-full px-4 py-2 text-left hover:bg-gray-800 transition-colors ${
-                  selectedType === type ? 'text-primary-blue' : 'text-white'
-                }`}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
 
-      {/* Price Range Filter */}
-      <div className="relative">
-        <button
-          onClick={() => setIsPriceDropdownOpen(!isPriceDropdownOpen)}
-          className="w-full md:w-[200px] flex items-center justify-between gap-2 px-4 py-2 bg-gray-900 rounded-lg text-white hover:bg-gray-800 transition-colors"
-        >
-          <div className="flex items-center gap-2">
-            <span className="truncate">
-              {priceRanges.find(range => range.value === selectedPrice)?.label}
-            </span>
+          {/* Price Range */}
+          <div className="w-full md:w-auto">
+            <label className="block text-sm font-medium text-gray-400 mb-2">
+              Price Range
+            </label>
+            <div className="flex gap-2">
+              {priceRanges.map(({ label, description }) => (
+                <button
+                  key={label}
+                  onClick={() => onPriceRangeChange(
+                    selectedPriceRange === label ? null : label
+                  )}
+                  className={`px-4 py-2 rounded-lg text-sm transition-colors ${
+                    selectedPriceRange === label
+                      ? 'bg-primary-blue text-white'
+                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  }`}
+                  title={description}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
-          <ChevronDown size={18} className={`transition-transform ${isPriceDropdownOpen ? 'rotate-180' : ''}`} />
-        </button>
-        
-        {isPriceDropdownOpen && (
-          <div className="absolute z-10 mt-2 w-full bg-gray-900 rounded-lg shadow-lg py-2">
-            {priceRanges.map((range) => (
-              <button
-                key={range.value}
-                onClick={() => {
-                  onPriceChange(range.value)
-                  setIsPriceDropdownOpen(false)
-                }}
-                className={`w-full px-4 py-2 text-left hover:bg-gray-800 transition-colors ${
-                  selectedPrice === range.value ? 'text-primary-blue' : 'text-white'
-                }`}
-              >
-                {range.label}
-              </button>
-            ))}
-          </div>
-        )}
+        </div>
       </div>
     </div>
   )
