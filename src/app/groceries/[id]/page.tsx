@@ -1,10 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { Star, Clock, ShoppingBag, Plus, Minus } from 'lucide-react'
+import { Star, Clock, ShoppingBag, Plus, Minus, ShoppingCart } from 'lucide-react'
 import Header from '@/components/layout/Header'
+import CartPreview from '@/components/cart/CartPreview'
 import { useCart } from '@/contexts/CartContext'
 
 // Mock data - In a real app, this would come from an API
@@ -76,8 +77,9 @@ interface Product {
 }
 
 export default function StorePage() {
+  const router = useRouter()
   const params = useParams()
-  const { addItem } = useCart()
+  const { addItem, getTotal, itemCount } = useCart()
   const [selectedCategory, setSelectedCategory] = useState<number>(1)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [quantities, setQuantities] = useState<Record<number, number>>({})
@@ -94,12 +96,20 @@ export default function StorePage() {
     if (quantity > 0) {
       addItem({
         id: product.id.toString(),
-        restaurantId: store.id,
+        vendorId: store.id,
+        vendorName: store.name,
         name: product.name,
         price: product.price,
-        basePrice: product.price,
         quantity,
-        image: product.image
+        image: product.image,
+        section: 'grocery',
+        options: [
+          {
+            name: 'Unit',
+            value: product.unit,
+            price: 0
+          }
+        ]
       })
       // Reset quantity after adding to cart
       setQuantities(prev => ({ ...prev, [product.id]: 0 }))
@@ -111,7 +121,9 @@ export default function StorePage() {
       <Header 
         isMobileMenuOpen={isMobileMenuOpen}
         onMobileMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-      />
+      >
+        <CartPreview />
+      </Header>
 
       {/* Store Hero */}
       <div className="relative h-[300px] md:h-[400px]">
@@ -174,7 +186,7 @@ export default function StorePage() {
       </div>
 
       {/* Product Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 pb-24">
         {store.categories.map((category) => (
           <div
             key={category.id}
@@ -241,6 +253,22 @@ export default function StorePage() {
           </div>
         ))}
       </div>
+
+      {/* Floating Checkout Button */}
+      {itemCount > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-card-background border-t border-gray-800 z-40">
+          <div className="max-w-7xl mx-auto">
+            <button
+              onClick={() => router.push('/checkout')}
+              className="w-full py-4 bg-primary-blue hover:bg-secondary-blue text-white rounded-lg font-medium flex items-center justify-center gap-2 transition-colors"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              <span>Proceed to Checkout ({itemCount} items)</span>
+              <span className="ml-2">${getTotal().toFixed(2)}</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 } 

@@ -1,0 +1,66 @@
+{
+  "common": {
+    "language": "Språk",
+    "cart": "Varukorg",
+    "search": "Sök",
+    "menu": "Meny",
+    "restaurants": "Restauranger",
+    "grocery": "Mataffär",
+    "pharmacy": "Apotek"
+  },
+  "home": {
+    "title": "Välkommen till Avaan Express",
+    "subtitle": "Allt du behöver på ett ställe",
+    "featured": "Utvalda produkter",
+    "categories": "Kategorier"
+  },
+  "cart": {
+    "title": "Din varukorg",
+    "empty": "Din varukorg är tom",
+    "subtotal": "Delsumma",
+    "total": "Totalt",
+    "checkout": "Till kassan"
+  },
+  "checkout": {
+    "title": "Kassa",
+    "delivery": {
+      "title": "Leveransinformation",
+      "firstName": "Förnamn",
+      "lastName": "Efternamn",
+      "email": "E-post",
+      "phone": "Telefon",
+      "address": "Adress",
+      "apartment": "Lägenhet (valfritt)",
+      "city": "Stad",
+      "state": "Län",
+      "zipCode": "Postnummer",
+      "instructions": "Leveransinstruktioner (valfritt)"
+    },
+    "payment": {
+      "title": "Betalningsmetod",
+      "card": "Kreditkort",
+      "applePay": "Apple Pay",
+      "googlePay": "Google Pay",
+      "cardNumber": "Kortnummer",
+      "cardName": "Kortinnehavarens namn",
+      "expiryDate": "Utgångsdatum",
+      "cvv": "CVV",
+      "placeOrder": "Lägg beställning",
+      "processing": "Bearbetar..."
+    }
+  },
+  "success": {
+    "title": "Beställningen lyckades!",
+    "message": "Tack för din beställning. Vi skickar en bekräftelse via e-post inom kort.",
+    "orderNumber": "Ordernummer",
+    "continue": "Fortsätt handla"
+  },
+  "errors": {
+    "required": "Detta fält är obligatoriskt",
+    "invalidEmail": "Ange en giltig e-postadress",
+    "invalidPhone": "Ange ett giltigt telefonnummer",
+    "invalidCard": "Ange ett giltigt kortnummer",
+    "invalidDate": "Ange ett giltigt datum (MM/ÅÅ)",
+    "invalidCVV": "Ange en giltig CVV"
+  }
+} 

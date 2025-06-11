@@ -177,6 +177,7 @@ export default function RestaurantPage() {
       image: item.image,
       section: 'restaurant'
     })
+    setShowItemModal(false)
   }
 
   return (
@@ -283,11 +284,16 @@ export default function RestaurantPage() {
       </div>
 
       {/* Menu Item Modal */}
-      <MenuItemModal
-        item={selectedItem}
-        onClose={() => setShowItemModal(false)}
-        onAddToCart={handleAddToCart}
-      />
+      {showItemModal && (
+        <MenuItemModal
+          item={selectedItem}
+          onClose={() => {
+            setShowItemModal(false)
+            setSelectedItem(null)
+          }}
+          onAddToCart={handleAddToCart}
+        />
+      )}
 
       {/* Cart Preview */}
       <CartPreview />

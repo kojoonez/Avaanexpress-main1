@@ -9,28 +9,17 @@ import { useCart } from '@/contexts/CartContext'
 export default function CartPreview() {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
-  const cart = useCart()
-
-  // If cart context is not yet initialized, show a loading state
-  if (!cart) {
-    return (
-      <div className="relative p-2">
-        <div className="w-6 h-6 animate-pulse bg-gray-600 rounded-full"></div>
-      </div>
-    )
-  }
-
   const {
-    items,
+    items = [],
     currentVendor,
-    itemCount,
+    itemCount = 0,
     removeItem,
     updateQuantity,
     getSubtotal,
     getDeliveryFee,
     getTax,
     getTotal
-  } = cart
+  } = useCart()
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {

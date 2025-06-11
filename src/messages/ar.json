@@ -1,0 +1,66 @@
+{
+  "common": {
+    "language": "اللغة",
+    "cart": "سلة التسوق",
+    "search": "بحث",
+    "menu": "القائمة",
+    "restaurants": "مطاعم",
+    "grocery": "بقالة",
+    "pharmacy": "صيدلية"
+  },
+  "home": {
+    "title": "مرحباً بك في آفان إكسبرس",
+    "subtitle": "كل ما تحتاجه في مكان واحد",
+    "featured": "المنتجات المميزة",
+    "categories": "الفئات"
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "empty": "سلة التسوق فارغة",
+    "subtotal": "المجموع الفرعي",
+    "total": "المجموع الكلي",
+    "checkout": "إتمام الشراء"
+  },
+  "checkout": {
+    "title": "إتمام الشراء",
+    "delivery": {
+      "title": "معلومات التوصيل",
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "address": "العنوان",
+      "apartment": "الشقة (اختياري)",
+      "city": "المدينة",
+      "state": "المنطقة",
+      "zipCode": "الرمز البريدي",
+      "instructions": "تعليمات التوصيل (اختياري)"
+    },
+    "payment": {
+      "title": "طريقة الدفع",
+      "card": "بطاقة الائتمان",
+      "applePay": "Apple Pay",
+      "googlePay": "Google Pay",
+      "cardNumber": "رقم البطاقة",
+      "cardName": "اسم حامل البطاقة",
+      "expiryDate": "تاريخ الانتهاء",
+      "cvv": "رمز التحقق",
+      "placeOrder": "تأكيد الطلب",
+      "processing": "جاري المعالجة..."
+    }
+  },
+  "success": {
+    "title": "تم الطلب بنجاح!",
+    "message": "شكراً لطلبك. سنرسل لك رسالة تأكيد عبر البريد الإلكتروني قريباً.",
+    "orderNumber": "رقم الطلب",
+    "continue": "متابعة التسوق"
+  },
+  "errors": {
+    "required": "هذا الحقل مطلوب",
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح",
+    "invalidPhone": "يرجى إدخال رقم هاتف صحيح",
+    "invalidCard": "يرجى إدخال رقم بطاقة صحيح",
+    "invalidDate": "يرجى إدخال تاريخ صحيح (MM/YY)",
+    "invalidCVV": "يرجى إدخال رمز تحقق صحيح"
+  }
+} 

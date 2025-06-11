@@ -1,0 +1,66 @@
+{
+  "common": {
+    "language": "Language",
+    "cart": "Cart",
+    "search": "Search",
+    "menu": "Menu",
+    "restaurants": "Restaurants",
+    "grocery": "Grocery",
+    "pharmacy": "Pharmacy"
+  },
+  "home": {
+    "title": "Welcome to Avaan Express",
+    "subtitle": "Your one-stop shop for all your needs",
+    "featured": "Featured Products",
+    "categories": "Categories"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "checkout": "Checkout"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "delivery": {
+      "title": "Delivery Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "apartment": "Apartment (optional)",
+      "city": "City",
+      "state": "State",
+      "zipCode": "ZIP Code",
+      "instructions": "Delivery Instructions (optional)"
+    },
+    "payment": {
+      "title": "Payment Method",
+      "card": "Credit Card",
+      "applePay": "Apple Pay",
+      "googlePay": "Google Pay",
+      "cardNumber": "Card Number",
+      "cardName": "Cardholder Name",
+      "expiryDate": "Expiry Date",
+      "cvv": "CVV",
+      "placeOrder": "Place Order",
+      "processing": "Processing..."
+    }
+  },
+  "success": {
+    "title": "Order Successful!",
+    "message": "Thank you for your order. We'll send you a confirmation email shortly.",
+    "orderNumber": "Order Number",
+    "continue": "Continue Shopping"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidPhone": "Please enter a valid phone number",
+    "invalidCard": "Please enter a valid card number",
+    "invalidDate": "Please enter a valid date (MM/YY)",
+    "invalidCVV": "Please enter a valid CVV"
+  }
+} 

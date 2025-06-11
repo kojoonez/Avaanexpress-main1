@@ -1,0 +1,66 @@
+{
+  "common": {
+    "language": "Kieli",
+    "cart": "Ostoskori",
+    "search": "Haku",
+    "menu": "Valikko",
+    "restaurants": "Ravintolat",
+    "grocery": "Ruokakauppa",
+    "pharmacy": "Apteekki"
+  },
+  "home": {
+    "title": "Tervetuloa Avaan Expressiin",
+    "subtitle": "Kaikki tarvitsemasi yhdestä paikasta",
+    "featured": "Suositut tuotteet",
+    "categories": "Kategoriat"
+  },
+  "cart": {
+    "title": "Ostoskorisi",
+    "empty": "Ostoskorisi on tyhjä",
+    "subtotal": "Välisumma",
+    "total": "Yhteensä",
+    "checkout": "Kassalle"
+  },
+  "checkout": {
+    "title": "Kassa",
+    "delivery": {
+      "title": "Toimitusosoite",
+      "firstName": "Etunimi",
+      "lastName": "Sukunimi",
+      "email": "Sähköposti",
+      "phone": "Puhelin",
+      "address": "Osoite",
+      "apartment": "Asunto (valinnainen)",
+      "city": "Kaupunki",
+      "state": "Maakunta",
+      "zipCode": "Postinumero",
+      "instructions": "Toimitusohjeet (valinnainen)"
+    },
+    "payment": {
+      "title": "Maksutapa",
+      "card": "Luottokortti",
+      "applePay": "Apple Pay",
+      "googlePay": "Google Pay",
+      "cardNumber": "Kortin numero",
+      "cardName": "Kortinhaltijan nimi",
+      "expiryDate": "Voimassaoloaika",
+      "cvv": "CVV",
+      "placeOrder": "Maksa tilaus",
+      "processing": "Käsitellään..."
+    }
+  },
+  "success": {
+    "title": "Tilaus onnistui!",
+    "message": "Kiitos tilauksestasi. Lähetämme sinulle vahvistusviestin sähköpostitse.",
+    "orderNumber": "Tilausnumero",
+    "continue": "Jatka ostoksia"
+  },
+  "errors": {
+    "required": "Tämä kenttä on pakollinen",
+    "invalidEmail": "Anna kelvollinen sähköpostiosoite",
+    "invalidPhone": "Anna kelvollinen puhelinnumero",
+    "invalidCard": "Anna kelvollinen kortin numero",
+    "invalidDate": "Anna kelvollinen päivämäärä (KK/VV)",
+    "invalidCVV": "Anna kelvollinen CVV"
+  }
+} 

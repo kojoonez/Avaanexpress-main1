@@ -1,4 +1,6 @@
-import { useState } from 'react'
+'use client'
+
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { X, Plus, Minus } from 'lucide-react'
 
@@ -29,6 +31,25 @@ export default function MenuItemModal({ item, onClose, onAddToCart }: MenuItemMo
   const [quantity, setQuantity] = useState(1)
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
 
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
+  // Reset state when modal opens with new item
+  useEffect(() => {
+    if (item) {
+      setQuantity(1)
+      setSelectedOptions({})
+    }
+  }, [item])
+
   if (!item) return null;
 
   const handleOptionSelect = (optionName: string, choiceName: string) => {
@@ -57,23 +78,30 @@ export default function MenuItemModal({ item, onClose, onAddToCart }: MenuItemMo
 
   const handleAddToCart = () => {
     onAddToCart(item, quantity, selectedOptions)
-    onClose()
+  }
+
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose()
+    }
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={handleBackdropClick}>
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-        onClick={onClose}
       />
 
       {/* Modal */}
       <div className="relative w-full max-w-2xl bg-card-background rounded-lg overflow-hidden shadow-xl">
         {/* Close Button */}
         <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors"
+          onClick={(e) => {
+            e.stopPropagation()
+            onClose()
+          }}
+          className="absolute top-4 right-4 z-50 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors"
         >
           <X size={20} />
         </button>
@@ -91,7 +119,7 @@ export default function MenuItemModal({ item, onClose, onAddToCart }: MenuItemMo
         )}
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-6" onClick={(e) => e.stopPropagation()}>
           <h2 className="text-2xl font-bold text-white mb-2">{item.name}</h2>
           <p className="text-gray-400 mb-6">{item.description}</p>
 
@@ -129,9 +157,9 @@ export default function MenuItemModal({ item, onClose, onAddToCart }: MenuItemMo
           )}
 
           {/* Quantity */}
-          <div className="flex items-center justify-between mb-6">
+          <div className="mb-6">
             <span className="text-sm font-medium text-gray-300">Quantity</span>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 mt-2">
               <button
                 onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
                 className="p-2 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-colors"
